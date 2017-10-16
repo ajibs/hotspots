@@ -9,6 +9,9 @@ const path = require('path');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const csurf = require('csurf');
+const helpers = require('./helpers');
+const errorHandlers = require('./handlers/errorHandlers');
+const flash = require('flash');
 
 const app = express();
 
@@ -61,15 +64,26 @@ if (app.get('env') === 'production') {
 
 app.use(session(sess));
 
+
 // protect site from Cross Site Request Forgery
 app.use(csurf());
 
 
-// expose variables to templates
+// flash messages to user screen
+app.use(flash());
+
+
+// expose helper variables to templates
 app.use((req, res, next) => {
+  res.locals.h = helpers;
   res.locals.csrfToken = req.csrfToken();
+
   next();
 });
+
+
+// load routes
+app.use('/', routes);
 
 
 // handle CSRF token errors here
@@ -81,9 +95,20 @@ app.use((err, req, res, next) => {
   return next(err);
 });
 
+// if routes don't work, 404 them and forward to error handler
+app.use(errorHandlers.notFound);
 
-// load routes
-app.use('/', routes);
+// see if these errors are just validation errors
+app.use(errorHandlers.flashValidationErrors);
+
+// Otherwise it was a really bad error we didn't expect
+if (app.get('env') === 'development') {
+  // development error handler: prints stack trace
+  app.use(errorHandlers.developmentErrors);
+}
+
+// production error handler
+app.use(errorHandlers.productionErrors);
 
 
 module.exports = app;

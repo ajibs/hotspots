@@ -1,6 +1,7 @@
 const express = require('express');
 const hotspotsController = require('./controllers/hotspotsController');
 const userController = require('./controllers/userController');
+const { catchErrors } = require('./handlers/errorHandlers');
 
 const router = express.Router();
 
