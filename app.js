@@ -77,7 +77,6 @@ app.use(flash());
 app.use((req, res, next) => {
   res.locals.h = helpers;
   res.locals.csrfToken = req.csrfToken();
-
   next();
 });
 

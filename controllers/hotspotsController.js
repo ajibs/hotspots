@@ -10,3 +10,8 @@ exports.test = (req, res) => {
     csrf: req.csrfToken()
   });
 };
+
+
+exports.showTest = (req, res) => {
+  res.send(req.body);
+};

@@ -1,6 +1,7 @@
 extends layout
 
-include mixins/_loginForm
+include mixins/_searchHotspots
 
 block content
   h2= title
+  +searchHotspots()

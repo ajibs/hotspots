@@ -1,6 +1,8 @@
 mixin loginForm()
-  label(for="username") Username
-  input(type="text" name="username")
-  label(for="password") Password
-  input(type="password" name="password")
-  input(type="submit" value="submit")
+  form(action="/login" method="POST")
+    input(type="hidden" name="_csrf" value= csrfToken)
+    label(for="username") Username
+    input(type="text" name="username")
+    label(for="password") Password
+    input(type="password" name="password")
+    input(type="submit" value="submit")

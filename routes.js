@@ -11,6 +11,6 @@ router.get('/login', userController.showLogin);
 
 
 router.get('/test', hotspotsController.test);
-
+router.post('/test', hotspotsController.showTest);
 
 module.exports = router;
