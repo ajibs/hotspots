@@ -13,12 +13,6 @@ html(lang="en")
     a(href="/login")
       button Login
 
-    block messages
-      if locals.flashes
-        - const categories = Object.keys(locals.flashes)
-        each category in categories
-          each message in flashes[category]
-            p= locals.flashes
 
     block content
 
