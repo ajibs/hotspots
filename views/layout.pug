@@ -13,9 +13,15 @@ html(lang="en")
     a(href="/login")
       button Login
 
+    block messages
+      if locals.flashes
+        - const categories = Object.keys(locals.flashes)
+        each category in categories
+          each message in flashes[category]
+            p!= message
+
 
     block content
-
 
     block scripts
       script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6k9IMLlnl2bzNLubzvzB-Y6f17lQyexU&libraries=places")

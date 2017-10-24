@@ -1,10 +1,12 @@
 const User = require('../models/User');
 
+
 exports.showLogin = (req, res) => {
   res.render('login', {
     title: 'Login'
   });
 };
+
 
 exports.showSignup = (req, res) => {
   res.render('signup', {
@@ -12,10 +14,12 @@ exports.showSignup = (req, res) => {
   });
 };
 
+
 exports.getUsers = async (req, res) => {
   const users = await User.find();
   res.json({ users });
 };
+
 
 exports.validateSignup = (req, res, next) => {
   req.checkBody('username', 'You must supply a name!').notEmpty();
@@ -34,3 +38,4 @@ exports.validateSignup = (req, res, next) => {
   }
   next(); // there were no errors
 };
+
