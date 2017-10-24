@@ -1,16 +1,27 @@
 import axios from 'axios';
+import { $ } from './bling';
 
 function searchPlaces(latInput, lngInput) {
   console.log(latInput, lngInput);
-  const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-  const url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=7.377535,3.9470396&radius=10000&type=night_club&key=AIzaSyDPxdi1VQQ3vF8voAvgQ93jugBmHEAc5fY';
+  $('#data').innerHTML = '';
+
+  // remove CORS proxy on uploading to host
+  const proxyurl = 'https://ajibs-cors-anywhere.herokuapp.com/';
+
+  // pass lat, lng and places key to url
+  const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latInput},${lngInput}&radius=10000&type=night_club&key=AIzaSyDPxdi1VQQ3vF8voAvgQ93jugBmHEAc5fY`;
+  // const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=7.3775,3.94703&radius=10000&type=night_club&key=AIzaSyDPxdi1VQQ3vF8voAvgQ93jugBmHEAc5fY`;
   axios
     .get(proxyurl + url)
     .then((res) => {
       const hotspots = res.data;
-      // console.log(hotspots);
-      console.log(hotspots.results[0].name);
-      document.getElementById('data').innerHTML = hotspots.results[0].name;
+
+      // hotspots.results contains all the data I need
+      hotspots.results.forEach((place) => {
+        console.log(place.name);
+        // render data on the page
+        $('#data').innerHTML += `${place.name}<br><br>`;
+      });
     })
     .catch(err => console.error(err));
 }
