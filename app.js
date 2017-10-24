@@ -11,7 +11,7 @@ const MongoStore = require('connect-mongo')(session);
 const csurf = require('csurf');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
-const flash = require('flash');
+const flash = require('connect-flash');
 const passport = require('passport');
 
 const app = express();
@@ -83,6 +83,7 @@ app.use((req, res, next) => {
   res.locals.h = helpers;
   res.locals.csrfToken = req.csrfToken();
   res.locals.flashes = req.flash();
+  res.locals.user = req.user || null;
   next();
 });
 
