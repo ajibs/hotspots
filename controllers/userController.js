@@ -39,3 +39,21 @@ exports.validateSignup = (req, res, next) => {
   next(); // there were no errors
 };
 
+
+exports.showProfile = (req, res) => {
+  res.render('profile', {
+    title: 'Edit Your Profile'
+  });
+};
+
+
+exports.updateProfile = async (req, res) => {
+  await User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $set: { username: req.body.username } },
+    { new: true, runValidators: true }
+  );
+
+  req.flash('success', 'profile update successful');
+  res.redirect('back');
+};

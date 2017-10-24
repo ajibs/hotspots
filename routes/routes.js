@@ -9,9 +9,8 @@ const router = express.Router();
 
 router.get('/', hotspotsController.showHome);
 
-router.get('/login', userController.showLogin);
-router.post('/login', authController.login);
 
+// signup, login and logout
 router.get('/signup', userController.showSignup);
 router.post(
   '/signup',
@@ -19,10 +18,16 @@ router.post(
   authController.signup
 );
 
+router.get('/login', userController.showLogin);
+router.post('/login', authController.login);
+
 router.get('/logout', authController.logout);
 
 
-router.get('/users', catchErrors(userController.getUsers));
+router.get('/profile', authController.isLoggedIn, userController.showProfile);
+router.post('/profile', catchErrors(userController.updateProfile));
+
+router.get('/users', authController.isLoggedIn, catchErrors(userController.getUsers));
 
 
 module.exports = router;

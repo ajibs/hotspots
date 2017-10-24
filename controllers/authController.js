@@ -10,14 +10,25 @@ exports.logout = (req, res) => {
 
 
 exports.signup = passport.authenticate('local-signup', {
-  successRedirect: '/users',
+  successRedirect: '/profile',
   failureRedirect: '/signup',
   failureFlash: true
 });
 
 
 exports.login = passport.authenticate('local-login', {
-  successRedirect: '/users',
+  successRedirect: '/profile',
   failureRedirect: '/login',
   failureFlash: true
 });
+
+
+exports.isLoggedIn = (req, res, next) => {
+  // first check if the user is authenticated
+  if (req.isAuthenticated()) {
+    return next(); // carry on! user is logged in
+  }
+  req.flash('error', 'You must be logged in to do that');
+  res.redirect('/login');
+};
+
