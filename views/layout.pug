@@ -6,7 +6,22 @@ html(lang="en")
     title #{title}
     link(rel="stylesheet" href="/dist/style.bundle.css")
   body
+    a(href="/")
+      button Home
+    a(href="/signup")
+      button Signup
+    a(href="/login")
+      button Login
+
+    block messages
+      if locals.flashes
+        - const categories = Object.keys(locals.flashes)
+        each category in categories
+          each message in flashes[category]
+            p= locals.flashes
+
     block content
+
 
     block scripts
       script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6k9IMLlnl2bzNLubzvzB-Y6f17lQyexU&libraries=places")
