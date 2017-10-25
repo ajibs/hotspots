@@ -10,17 +10,22 @@ function searchPlaces(latInput, lngInput) {
 
   // pass lat, lng and places key to url
   const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latInput},${lngInput}&radius=10000&type=night_club&key=AIzaSyDPxdi1VQQ3vF8voAvgQ93jugBmHEAc5fY`;
-  // const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=7.3775,3.94703&radius=10000&type=night_club&key=AIzaSyDPxdi1VQQ3vF8voAvgQ93jugBmHEAc5fY`;
   axios
     .get(proxyurl + url)
     .then((res) => {
       const hotspots = res.data;
+      const csrfGeneralToken = $('#csrfGeneralToken').value;
 
       // hotspots.results contains all the data I need
       hotspots.results.forEach((place) => {
-        console.log(place.name);
         // render data on the page
-        $('#data').innerHTML += `${place.name}<br><br>`;
+        $('#data').innerHTML +=
+          `<form method="POST" action="/places/${place.place_id}">
+            <input type="hidden" name="_csrf" value=${csrfGeneralToken}>
+            ${place.name}
+            <button type="submit" name="going">0 Going</button>
+          </form><br><br>
+          `;
       });
     })
     .catch(err => console.error(err));

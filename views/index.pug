@@ -5,3 +5,6 @@ include mixins/_searchHotspots
 block content
   h2= title
   +searchHotspots()
+  form(method="POST" action="/places/test")
+    input(type="hidden" name="_csrf" value= csrfToken)
+    input(type="submit" value="test")
