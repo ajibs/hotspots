@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { $ } from './bling';
+import { $, $$ } from './bling';
+import ajaxGoing from './ajaxGoing';
+
 
 function searchPlaces(latInput, lngInput) {
   console.log(latInput, lngInput);
@@ -20,12 +22,16 @@ function searchPlaces(latInput, lngInput) {
       hotspots.results.forEach((place) => {
         // render data on the page
         $('#data').innerHTML +=
-          `<form method="POST" action="/places/${place.place_id}">
+          `<form method="GET" action="/places/${place.place_id}" class="going">
             <input type="hidden" name="_csrf" value=${csrfGeneralToken}>
             ${place.name}
-            <button type="submit" name="going">0 Going</button>
+            <button type="submit" name="goingButton">0 Going</button>
           </form><br><br>
           `;
+      });
+
+      $$('form.going').on('submit', function(e) {
+        ajaxGoing(e, this, csrfGeneralToken);
       });
     })
     .catch(err => console.error(err));

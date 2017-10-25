@@ -20,7 +20,7 @@ exports.going = async (req, res) => {
   }
 
   // place found
-  // check if user has indicated going tonight
+  // check if user has previously indicated going tonight
   const [incValue, operator] = place[0].usernamesGoing.includes(username) ? ['-1', '$pull'] : ['1', '$addToSet'];
 
   // find placeID and update
