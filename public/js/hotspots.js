@@ -1,15 +1,6 @@
 import '../css/style.css'
 
-document.write('hello world');
+import { $, $$ } from './modules/bling';
+import autocomplete from './modules/autocomplete';
 
-// example of an arrow function
-const test = () => {
-  console.log('ES6');
-};
-
-// async await functions
-const baz = async () => {
-  let a = 2;
-  await a**4;
-  console.log(a**a);
-}
+autocomplete( $('.search-place') );

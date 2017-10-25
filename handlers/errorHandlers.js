@@ -45,6 +45,17 @@ exports.flashValidationErrors = (err, req, res, next) => {
 };
 
 
+// handle CSRF token errors here
+exports.csurfErrors = (err, req, res, next) => {
+  if (err.code === 'EBADCSRFTOKEN') {
+    res.status(403);
+    res.send('form tampered with');
+  }
+
+  return next(err);
+};
+
+
 /*
   Development Error Hanlder
 

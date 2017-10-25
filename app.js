@@ -77,7 +77,6 @@ app.use(flash());
 app.use((req, res, next) => {
   res.locals.h = helpers;
   res.locals.csrfToken = req.csrfToken();
-
   next();
 });
 
@@ -86,20 +85,14 @@ app.use((req, res, next) => {
 app.use('/', routes);
 
 
-// handle CSRF token errors here
-app.use((err, req, res, next) => {
-  if (err.code === 'EBADCSRFTOKEN') {
-    res.status(403);
-    res.send('form tampered with');
-  }
-  return next(err);
-});
-
 // if routes don't work, 404 them and forward to error handler
 app.use(errorHandlers.notFound);
 
 // see if these errors are just validation errors
 app.use(errorHandlers.flashValidationErrors);
+
+// csurf Token errors
+app.use(errorHandlers.csurfErrors);
 
 // Otherwise it was a really bad error we didn't expect
 if (app.get('env') === 'development') {
