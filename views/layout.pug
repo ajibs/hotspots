@@ -6,6 +6,21 @@ html(lang="en")
     title #{title}
     link(rel="stylesheet" href="/dist/style.bundle.css")
   body
+    a(href="/")
+      button Home
+    a(href="/signup")
+      button Signup
+    a(href="/login")
+      button Login
+
+    block messages
+      if locals.flashes
+        - const categories = Object.keys(locals.flashes)
+        each category in categories
+          each message in flashes[category]
+            p!= message
+
+
     block content
 
     block scripts

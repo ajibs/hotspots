@@ -12,7 +12,7 @@ exports.dump = obj => JSON.stringify(obj, null, 2);
 exports.icon = name => fs.readFileSync(`./public/images/icons/${name}.svg`);
 
 // site name
-exports.siteName = 'Best Hangouts Around';
+exports.siteName = 'Best Hotspots Around';
 
 // site menu
 exports.menu = [

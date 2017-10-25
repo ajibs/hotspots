@@ -1,6 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
-const routes = require('./routes');
+const routes = require('./routes/routes');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const cookieParser = require('cookie-parser');
@@ -11,7 +11,8 @@ const MongoStore = require('connect-mongo')(session);
 const csurf = require('csurf');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
-const flash = require('flash');
+const flash = require('connect-flash');
+const passport = require('passport');
 
 const app = express();
 
@@ -64,6 +65,10 @@ if (app.get('env') === 'production') {
 
 app.use(session(sess));
 
+// initialize passport and use persistent login sessions
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // protect site from Cross Site Request Forgery
 app.use(csurf());
@@ -77,6 +82,8 @@ app.use(flash());
 app.use((req, res, next) => {
   res.locals.h = helpers;
   res.locals.csrfToken = req.csrfToken();
+  res.locals.flashes = req.flash();
+  res.locals.user = req.user || null;
   next();
 });
 
