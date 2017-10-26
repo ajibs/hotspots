@@ -4,7 +4,7 @@ require('../handlers/passportConfig.js')(passport);
 
 exports.logout = (req, res) => {
   req.logout();
-  res.flash('success', 'You are now logged out');
+  req.flash('success', 'You are now logged out');
   res.redirect('/');
 };
 
@@ -17,7 +17,7 @@ exports.signup = passport.authenticate('local-signup', {
 
 
 exports.login = passport.authenticate('local-login', {
-  successRedirect: '/profile',
+  successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
 });
