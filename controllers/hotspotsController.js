@@ -14,7 +14,9 @@ exports.going = async (req, res) => {
 
   if (!place.length) {
     // place not found
-    const newHotspot = await (new Place({ placeID, usernamesGoing: username })).save();
+    // set document expiration date
+    const expireAt = Place.expirationDate();
+    const newHotspot = await (new Place({ placeID, usernamesGoing: username, expireAt })).save();
     res.json({ message: 'not found', newHotspot });
     return;
   }
