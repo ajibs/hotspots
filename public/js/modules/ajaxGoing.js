@@ -7,9 +7,18 @@ function ajaxGoing(e, target, csrfToken) {
       _csrf: csrfToken
     })
     .then((res) => {
-      console.log(res.data);
-      const value = res.data.updatedPlace ? res.data.updatedPlace.numberTonight : res.data.newHotspot.numberTonight;
+      // user not logged in; thus no message property
+      if (!res.data.message) {
+        alert('You must be logged in');
+        // could replace this with production url for better readility
+        window.location.href = `${self.location}login`;
+      }
 
+      const result = res.data;
+      console.log(result);
+      const value = result.updated ? result.updated.numberTonight : result.newSpot.numberTonight;
+
+      // select "going button" with name tag
       const button = target.goingButton;
       button.innerHTML = `${value} Going`;
     })

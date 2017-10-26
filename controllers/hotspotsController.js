@@ -16,8 +16,8 @@ exports.going = async (req, res) => {
     // place not found
     // set document expiration date
     const expireAt = Place.expirationDate();
-    const newHotspot = await (new Place({ placeID, usernamesGoing: username, expireAt })).save();
-    res.json({ message: 'not found', newHotspot });
+    const newSpot = await (new Place({ placeID, usernamesGoing: username, expireAt })).save();
+    res.json({ message: 'not found', newSpot });
     return;
   }
 
@@ -26,7 +26,7 @@ exports.going = async (req, res) => {
   const [incValue, operator] = place[0].usernamesGoing.includes(username) ? ['-1', '$pull'] : ['1', '$addToSet'];
 
   // find placeID and update
-  const updatedPlace = await Place.findOneAndUpdate(
+  const updated = await Place.findOneAndUpdate(
     { placeID },
     {
       $inc: { numberTonight: incValue },
@@ -35,5 +35,5 @@ exports.going = async (req, res) => {
     { new: true }
   );
 
-  res.json({ updatedPlace });
+  res.json({ message: 'found', updated });
 };
