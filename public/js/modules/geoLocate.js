@@ -1,6 +1,6 @@
 import searchPlaces from './searchPlaces';
 
-function autoSearch(input) {
+function geoLocate(input) {
   input.on('click', () => {
     if (navigator.geolocation) {
       const geoSuccess = (position) => {
@@ -27,4 +27,4 @@ function autoSearch(input) {
   });
 }
 
-export default autoSearch;
+export default geoLocate;
