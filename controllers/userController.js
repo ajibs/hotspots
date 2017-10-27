@@ -31,7 +31,6 @@ exports.validateSignup = (req, res, next) => {
     req.flash('error', errors.map(err => err.msg));
     res.render('signup', {
       title: 'Signup',
-      body: req.body,
       flashes: req.flash()
     });
     return; // stop the fn running
