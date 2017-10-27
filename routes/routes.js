@@ -38,4 +38,9 @@ router.post(
 );
 
 
+// Facebook Routes
+router.get('/auth/facebook', authController.facebookAuth);
+router.get('/auth/facebook/callback', authController.facebookCallback);
+
+
 module.exports = router;

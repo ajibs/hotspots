@@ -3,8 +3,9 @@
  */
 
 // load dependencies
-const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
+const LocalStrategy = require('passport-local').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 
 
 module.exports = (passport) => {
@@ -31,23 +32,27 @@ module.exports = (passport) => {
   }, async (req, username, password, done) => {
     // User.findOne wont fire unless data is sent back
     process.nextTick(() => {
-      // check if user email already exists in DB
-      User.findOne({ username }, (err, user) => {
+      // check if user username already exists in DB
+      User.findOne({ 'local.username': username }, async (err, user) => {
         if (err) {
           return done(err);
         }
 
-        // email exists in DB
-        if (user) {
-          return done(null, false, req.flash('signupMessage', 'That username already exists'));
+        // username does not exist in DB; create new user
+        if (!user) {
+          const newUser = new User();
+          newUser.local.username = username;
+          newUser.local.password = newUser.generateHash(password);
+          try {
+            await newUser.save();
+            return done(null, newUser);
+          } catch (e) {
+            console.error(e);
+          }
         }
 
-        // email does not exist in DB; create new user
-        const newUser = new User();
-        newUser.username = username;
-        newUser.password = newUser.generateHash(password);
-        newUser.save();
-        return done(null, newUser);
+        // username exists in DB
+        return done(null, false, req.flash('signupMessage', 'That username already exists'));
       });
     });
   }));
@@ -59,7 +64,7 @@ module.exports = (passport) => {
   }, (req, username, password, done) => {
     process.nextTick(() => {
       // check if username exists
-      User.findOne({ username }, (err, user) => {
+      User.findOne({ 'local.username': username }, (err, user) => {
         if (err) {
           return done(err);
         }
@@ -79,4 +84,44 @@ module.exports = (passport) => {
       });
     });
   }));
+
+
+  // Facebook strategy for login
+  passport.use(new FacebookStrategy(
+    {
+      clientID: process.env.FACEBOOKAUTH_CLIENTID,
+      clientSecret: process.env.FACEBOOKAUTH_CLIENTSECRET,
+      callbackURL: 'http://localhost:3000/auth/facebook/callback'
+    },
+    // facebook sends back token and profile
+    (token, refreshToken, profile, done) => {
+      // dont run User.findOne until all our input data is complete
+      process.nextTick(() => {
+        // find the user in the database with their facebook id
+        User.findOne({ 'facebook.id': profile.id }, async (err, user) => {
+          if (err) {
+            return done(err);
+          }
+
+          // no user with that facebook id found; sign them up
+          if (!user) {
+            const newUser = new User();
+            newUser.facebook.id = profile.id;
+            newUser.facebook.token = token;
+            newUser.facebook.name = profile.displayName;
+            try {
+              await newUser.save();
+              return done(null, newUser);
+            } catch (e) {
+              console.error(e);
+            }
+          }
+
+          // user found; log them in
+          return done(null, user);
+        });
+
+      });
+    }
+  ));
 };

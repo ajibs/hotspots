@@ -6,5 +6,5 @@ block content
   form(action="/profile" method="POST")
     input(type="hidden" name="_csrf" value= csrfToken)
     label(for="username") Username
-    input(type="text" name="username" value=user.username)
+    input(type="text" name="username" value=user.local.username)
     button(type="submit" value="submit") Submit

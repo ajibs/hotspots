@@ -10,7 +10,7 @@ exports.showHome = (req, res) => {
 exports.going = async (req, res) => {
   const { placeID } = req.params;
   const place = await Place.find({ placeID });
-  const { username } = req.user;
+  const { username } = req.user.local;
 
   if (!place.length) {
     // place not found

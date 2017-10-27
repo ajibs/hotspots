@@ -32,3 +32,11 @@ exports.isLoggedIn = (req, res, next) => {
   res.redirect('/login');
 };
 
+
+exports.facebookAuth = passport.authenticate('facebook');
+
+
+exports.facebookCallback = passport.authenticate('facebook', {
+  successRedirect: '/profile',
+  failureRedirect: '/login'
+});

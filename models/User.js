@@ -2,16 +2,23 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    unique: true,
-    lowercase: true,
-    trim: true,
-    required: 'Please supply a username'
+  local: {
+    username: {
+      type: String,
+      unique: true,
+      lowercase: true,
+      trim: true
+      // required: 'Please supply a username'
+    },
+    password: {
+      type: String
+      // required: 'Please supply a password'
+    }
   },
-  password: {
-    type: String,
-    required: 'Please supply a password'
+  facebook: {
+    id: String,
+    token: String,
+    name: String
   }
 });
 
@@ -25,7 +32,7 @@ userSchema.methods.generateHash = function generateHash(password) {
 }
 
 userSchema.methods.validPassword = function validPassword(password) {
-  return bcrypt.compareSync(password, this.password);
+  return bcrypt.compareSync(password, this.local.password);
 };
 
 module.exports = mongoose.model('User', userSchema);
