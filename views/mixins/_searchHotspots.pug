@@ -1,5 +1,6 @@
 mixin searchHotspots()
   form
-    input(type="hidden" name="_csrf" value= csrfToken)
-    input(type="text" name="search" placeholder="Enter your location" class="search-place")
+    input(type="hidden" id="csrfGeneralToken" name="_csrf" value= csrfToken)
+    label Enter a City
+    input(type="text" name="search" placeholder="e.g. Amsterdam" id="search-place")
   div(id="data")

@@ -24,10 +24,18 @@ router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 
 
-router.get('/profile', authController.isLoggedIn, userController.showProfile);
+router.get(
+  '/profile',
+  authController.isLoggedIn,
+  userController.showProfile
+);
 router.post('/profile', catchErrors(userController.updateProfile));
 
-router.get('/users', authController.isLoggedIn, catchErrors(userController.getUsers));
+router.post(
+  '/places/:placeID',
+  authController.isLoggedIn,
+  catchErrors(hotspotsController.going)
+);
 
 
 module.exports = router;

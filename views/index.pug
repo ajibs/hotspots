@@ -3,8 +3,18 @@ extends layout
 include mixins/_searchHotspots
 
 block content
+  pre= h.dump(user)
   h2= title
+  h3 Discover Hotspots in a City
+  button(id="geolocation") Find near Me
+  h3 OR
   +searchHotspots()
+<<<<<<< HEAD
   div(id="chillOut")
       p Chill
       img(src="/images/icons/adorable-kitten.gif")
+=======
+  form(method="POST" action="/places/test")
+    input(type="hidden" name="_csrf" value= csrfToken)
+    input(type="submit" value="test")
+>>>>>>> development
