@@ -3,9 +3,20 @@ import { $, $$ } from './bling';
 import ajaxGoing from './ajaxGoing';
 
 
+function openModal() {
+  $('#chillOut').style.display = 'block';
+}
+
+
+function closeModal() {
+  $('#chillOut').style.display = 'none';
+}
+
+
 function searchPlaces(latInput, lngInput) {
   console.log(latInput, lngInput);
   $('#data').innerHTML = '';
+  openModal();
 
   // remove CORS proxy on uploading to host
   const proxyurl = 'https://ajibs-cors-anywhere.herokuapp.com/';
@@ -29,12 +40,18 @@ function searchPlaces(latInput, lngInput) {
           </form><br><br>
           `;
       });
+      closeModal();
 
+      // when user clicks "going button" update database and UI
       $$('form.going').on('submit', function(e) {
         ajaxGoing(e, this, csrfGeneralToken);
       });
     })
-    .catch(err => console.error(err));
+    .catch((err) => {
+      console.error(err);
+      closeModal();
+      alert('Error! Unable to Retrieve Night clubs at the moment');
+    });
 }
 
 

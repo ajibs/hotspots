@@ -1,6 +1,5 @@
 import searchPlaces from './searchPlaces';
 
-
 function autocomplete(input) {
   if (!input) return; // skip this function from running if there is no input on the page
 

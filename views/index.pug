@@ -9,6 +9,9 @@ block content
   button(id="geolocation") Find near Me
   h3 OR
   +searchHotspots()
+  div(id="chillOut")
+      p Chill
+      img(src="/images/icons/adorable-kitten.gif")
   form(method="POST" action="/places/test")
     input(type="hidden" name="_csrf" value= csrfToken)
     input(type="submit" value="test")
