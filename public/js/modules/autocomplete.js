@@ -1,10 +1,19 @@
 import axios from 'axios';
 import { $ } from './bling';
 
+function openModal() {
+  $('#chillOut').style.display = 'block';
+}
+
+
+function closeModal() {
+  $('#chillOut').style.display = 'none';
+}
+
 function searchPlaces(latInput, lngInput) {
   console.log(latInput, lngInput);
   $('#data').innerHTML = '';
-
+  openModal();
   // remove CORS proxy on uploading to host
   const proxyurl = 'https://ajibs-cors-anywhere.herokuapp.com/';
 
@@ -22,8 +31,13 @@ function searchPlaces(latInput, lngInput) {
         // render data on the page
         $('#data').innerHTML += `${place.name}<br><br>`;
       });
+      closeModal();
     })
-    .catch(err => console.error(err));
+    .catch((err) => {
+      console.error(err);
+      closeModal();
+      alert('Error! Unable to Retrieve Night clubs at the moment');
+    });
 }
 
 
