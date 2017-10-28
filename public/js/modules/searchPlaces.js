@@ -28,11 +28,11 @@ function searchPlaces(latInput, lngInput) {
     .then((res) => {
       const hotspots = res.data;
       const csrfGeneralToken = $('#csrfGeneralToken').value;
-
+      let html = '';
       // hotspots.results contains all the data I need
       hotspots.results.forEach((place) => {
         // render data on the page
-        $('#data').innerHTML +=
+        html +=
           `<form action="/places/${place.place_id}" class="going">
             <input type="hidden" name="_csrf" value=${csrfGeneralToken}>
             ${place.name}
@@ -40,6 +40,7 @@ function searchPlaces(latInput, lngInput) {
           </form><br><br>
           `;
       });
+      $('#data').innerHTML = html;
       closeModal();
 
       // when user clicks "going button" update database and UI

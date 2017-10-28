@@ -31,4 +31,6 @@ html(lang="en")
 
     block scripts
       script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6k9IMLlnl2bzNLubzvzB-Y6f17lQyexU&libraries=places")
+      if (user)
+        script const signedInUser = true;
       script(src="/dist/App.bundle.js")
