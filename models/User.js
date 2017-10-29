@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema({
   local: {
     username: {
       type: String,
-      unique: true,
       lowercase: true,
       trim: true
       // required: 'Please supply a username'
@@ -19,6 +18,16 @@ const userSchema = new mongoose.Schema({
     id: String,
     token: String,
     name: String
+  },
+  twitter: {
+    id: String,
+    token: String,
+    name: String
+  },
+  google: {
+    id: String,
+    token: String,
+    name: String
   }
 });
 
@@ -29,7 +38,7 @@ const userSchema = new mongoose.Schema({
 // generate a hash
 userSchema.methods.generateHash = function generateHash(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(12), null);
-}
+};
 
 userSchema.methods.validPassword = function validPassword(password) {
   return bcrypt.compareSync(password, this.local.password);

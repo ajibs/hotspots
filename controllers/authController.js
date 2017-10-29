@@ -40,3 +40,21 @@ exports.facebookCallback = passport.authenticate('facebook', {
   successRedirect: '/profile',
   failureRedirect: '/login'
 });
+
+
+exports.twitterAuth = passport.authenticate('twitter');
+
+
+exports.twitterCallback = passport.authenticate('twitter', {
+  successRedirect: '/profile',
+  failureRedirect: '/login'
+});
+
+
+exports.googleAuth = passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] });
+
+
+exports.googleCallback = passport.authenticate('google', {
+  successRedirect: '/profile',
+  failureRedirect: '/login'
+});

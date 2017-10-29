@@ -38,9 +38,19 @@ router.post(
 );
 
 
-// Facebook Routes
+// Facebook Login
 router.get('/auth/facebook', authController.facebookAuth);
 router.get('/auth/facebook/callback', authController.facebookCallback);
+
+
+// Twitter Login
+router.get('/auth/twitter', authController.twitterAuth);
+router.get('/auth/twitter/callback', authController.twitterCallback);
+
+
+// Google Login
+router.get('/auth/google', authController.googleAuth);
+router.get('/auth/google/callback', authController.googleCallback);
 
 
 module.exports = router;

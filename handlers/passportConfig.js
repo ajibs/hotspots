@@ -6,6 +6,8 @@
 const User = require('../models/User');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const TwitterStrategy = require('passport-twitter').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 
 module.exports = (passport) => {
@@ -89,8 +91,8 @@ module.exports = (passport) => {
   // Facebook strategy for login
   passport.use(new FacebookStrategy(
     {
-      clientID: process.env.FACEBOOKAUTH_CLIENTID,
-      clientSecret: process.env.FACEBOOKAUTH_CLIENTSECRET,
+      clientID: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       callbackURL: 'http://localhost:3000/auth/facebook/callback'
     },
     // facebook sends back token and profile
@@ -120,7 +122,76 @@ module.exports = (passport) => {
           // user found; log them in
           return done(null, user);
         });
+      });
+    }
+  ));
 
+
+  // Twitter strategy for login
+  passport.use(new TwitterStrategy(
+    {
+      consumerKey: process.env.TWITTER_CLIENT_ID,
+      consumerSecret: process.env.TWITTER_CLIENT_SECRET,
+      callbackURL: 'http://localhost:3000/auth/twitter/callback'
+    },
+    (token, tokenSecret, profile, done) => {
+      process.nextTick(() => {
+        User.findOne({ 'twitter.id': profile.id }, async (err, user) => {
+          if (err) {
+            return done(err);
+          }
+          // user not found in database; sign them up
+          if (!user) {
+            const newUser = new User();
+            newUser.twitter.id = profile.id;
+            newUser.twitter.token = token;
+            newUser.twitter.name = profile.displayName;
+            try {
+              await newUser.save();
+              return done(null, newUser);
+            } catch (e) {
+              console.error(e);
+            }
+          }
+
+          // user found log them in
+          return done(null, user);
+        });
+      });
+    }
+  ));
+
+
+  // Google strategy for login
+  passport.use(new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: 'http://localhost:3000/auth/google/callback'
+    },
+    (accessToken, refreshToken, profile, done) => {
+      process.nextTick(() => {
+        User.findOne({ 'google.id': profile.id }, async (err, user) => {
+          if (err) {
+            return done(err);
+          }
+          // user not found in database; sign them up
+          if (!user) {
+            const newUser = new User();
+            newUser.google.id = profile.id;
+            newUser.google.token = accessToken;
+            newUser.google.name = profile.displayName;
+            try {
+              await newUser.save();
+              return done(null, newUser);
+            } catch (e) {
+              console.error(e);
+            }
+          }
+
+          // user found log them in
+          return done(null, user);
+        });
       });
     }
   ));
