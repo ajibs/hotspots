@@ -3,8 +3,34 @@ extends layout
 block content
   pre= h.dump(user)
   h2= title
-  form(action="/profile" method="POST")
-    input(type="hidden" name="_csrf" value= csrfToken)
-    label(for="username") Username
-    input(type="text" name="username" value=user.local.username)
-    button(type="submit" value="submit") Submit
+  // local profile
+  if user.local.username
+    form(action="/profile" method="POST")
+      input(type="hidden" name="_csrf" value= csrfToken)
+      label(for="username") Username
+      input(type="text" name="username" value=user.local.username)
+      button(type="submit" value="submit") Submit
+    a(href="/unlink/local" class="btn btn-danger btn-lg") Unlink Local
+  else
+    a(href="/connect/local" class="btn btn-success btn-lg") Connect Local
+  // facebook profile
+  if user.facebook.id
+    p= user.facebook.id
+    p= user.facebook.name
+    a(href="/unlink/facebook" class="btn btn-danger btn-lg") Unlink Facebook
+  else
+    a(href="/connect/facebook" class="btn btn-success btn-lg") Connect Facebook
+  // twitter profile
+  if user.twitter.id
+    p= user.twitter.id
+    p= user.twitter.name
+    a(href="/unlink/twitter" class="btn btn-danger btn-lg") Unlink Twitter
+  else
+    a(href="/connect/twitter" class="btn btn-success btn-lg") Connect Twitter
+  // google profile
+  if user.google.id
+    p= user.google.id
+    p= user.google.name
+    a(href="/unlink/google" class="btn btn-danger btn-lg") Unlink Google
+  else
+    a(href="/connect/google" class="btn btn-success btn-lg") Connect Google

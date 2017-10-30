@@ -34,8 +34,6 @@ exports.isLoggedIn = (req, res, next) => {
 
 
 exports.facebookAuth = passport.authenticate('facebook');
-
-
 exports.facebookCallback = passport.authenticate('facebook', {
   successRedirect: '/profile',
   failureRedirect: '/login'
@@ -43,8 +41,6 @@ exports.facebookCallback = passport.authenticate('facebook', {
 
 
 exports.twitterAuth = passport.authenticate('twitter');
-
-
 exports.twitterCallback = passport.authenticate('twitter', {
   successRedirect: '/profile',
   failureRedirect: '/login'
@@ -52,9 +48,20 @@ exports.twitterCallback = passport.authenticate('twitter', {
 
 
 exports.googleAuth = passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] });
-
-
 exports.googleCallback = passport.authenticate('google', {
   successRedirect: '/profile',
   failureRedirect: '/login'
 });
+
+
+exports.connectLocalAuth = passport.authenticate('local-signup', {
+  successRedirect: '/profile',
+  failureRedirect: '/connect/local'
+});
+
+
+exports.connectFacebook = passport.authorize('facebook');
+
+exports.connectTwitter = passport.authorize('twitter');
+
+exports.connectGoogle = passport.authorize('google', { scope: ['https://www.googleapis.com/auth/plus.login'] });

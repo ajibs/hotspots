@@ -35,26 +35,32 @@ module.exports = (passport) => {
     // User.findOne wont fire unless data is sent back
     process.nextTick(() => {
       // check if user username already exists in DB
-      User.findOne({ 'local.username': username }, async (err, user) => {
+      User.findOne({ 'local.username': username }, async (err, existingUser) => {
         if (err) {
           return done(err);
         }
 
-        // username does not exist in DB; create new user
-        if (!user) {
-          const newUser = new User();
-          newUser.local.username = username;
-          newUser.local.password = newUser.generateHash(password);
-          try {
-            await newUser.save();
-            return done(null, newUser);
-          } catch (e) {
-            console.error(e);
-          }
+        if (existingUser) {
+          // username exists in DB
+          return done(null, false, req.flash('signupMessage', 'That username already exists'));
         }
 
-        // username exists in DB
-        return done(null, false, req.flash('signupMessage', 'That username already exists'));
+        let localUser;
+        if (req.user) {
+          // user is logged in; use existing account details
+          localUser = req.user;
+        } else {
+          // create entirely new user
+          localUser = new User();
+        }
+        localUser.local.username = username;
+        localUser.local.password = localUser.generateHash(password);
+        try {
+          await localUser.save();
+          return done(null, localUser);
+        } catch (e) {
+          console.error(e);
+        }
       });
     });
   }));
@@ -88,40 +94,59 @@ module.exports = (passport) => {
   }));
 
 
+  // GENERIC FUNCTION FOR ALL SOCIAL MEDIA AUTHENTICATION
+  async function processAuth(req, token, profile, done, socialMedia) {
+
+    const query = `${socialMedia}.id`;
+
+    // check user in the database with their social media id
+    User.findOne({ [query]: profile.id }, async (err, user) => {
+      if (err) {
+        return done(err);
+      }
+
+      if (user) {
+        // user account exists;
+        return done(null, user);
+      }
+
+      let socialUser;
+      // check if the user is already logged in
+      if (req.user) {
+        // user is logged in; use exisitng account details
+        socialUser = req.user;
+      } else {
+        // create entirely new user
+        socialUser = new User();
+      }
+      socialUser[socialMedia].id = profile.id;
+      socialUser[socialMedia].token = token;
+      socialUser[socialMedia].name = profile.displayName;
+      try {
+        await socialUser.save();
+        return done(null, socialUser);
+      } catch (e) {
+        console.error(e);
+      }
+    });
+  }
+
+
   // Facebook strategy for login
   passport.use(new FacebookStrategy(
     {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/facebook/callback'
+      callbackURL: 'http://localhost:3000/auth/facebook/callback',
+      // allows us to pass in the req from out route (lets us check if a user is logged in or not)
+      passReqToCallback: true
     },
-    // facebook sends back token and profile
-    (token, refreshToken, profile, done) => {
-      // dont run User.findOne until all our input data is complete
+
+    // Facebook sends back token and profile
+    (req, token, refreshToken, profile, done) => {
+      // don't run processAuth until all our input data is complete
       process.nextTick(() => {
-        // find the user in the database with their facebook id
-        User.findOne({ 'facebook.id': profile.id }, async (err, user) => {
-          if (err) {
-            return done(err);
-          }
-
-          // no user with that facebook id found; sign them up
-          if (!user) {
-            const newUser = new User();
-            newUser.facebook.id = profile.id;
-            newUser.facebook.token = token;
-            newUser.facebook.name = profile.displayName;
-            try {
-              await newUser.save();
-              return done(null, newUser);
-            } catch (e) {
-              console.error(e);
-            }
-          }
-
-          // user found; log them in
-          return done(null, user);
-        });
+        processAuth(req, token, profile, done, 'facebook');
       });
     }
   ));
@@ -132,31 +157,14 @@ module.exports = (passport) => {
     {
       consumerKey: process.env.TWITTER_CLIENT_ID,
       consumerSecret: process.env.TWITTER_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/twitter/callback'
+      callbackURL: 'http://localhost:3000/auth/twitter/callback',
+      passReqToCallback: true
     },
-    (token, tokenSecret, profile, done) => {
+    // Twitter sends back token and profile
+    (req, token, refreshToken, profile, done) => {
+      // don't run processAuth until all our input data is complete
       process.nextTick(() => {
-        User.findOne({ 'twitter.id': profile.id }, async (err, user) => {
-          if (err) {
-            return done(err);
-          }
-          // user not found in database; sign them up
-          if (!user) {
-            const newUser = new User();
-            newUser.twitter.id = profile.id;
-            newUser.twitter.token = token;
-            newUser.twitter.name = profile.displayName;
-            try {
-              await newUser.save();
-              return done(null, newUser);
-            } catch (e) {
-              console.error(e);
-            }
-          }
-
-          // user found log them in
-          return done(null, user);
-        });
+        processAuth(req, token, profile, done, 'twitter');
       });
     }
   ));
@@ -167,31 +175,14 @@ module.exports = (passport) => {
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/google/callback'
+      callbackURL: 'http://localhost:3000/auth/google/callback',
+      passReqToCallback: true
     },
-    (accessToken, refreshToken, profile, done) => {
+    // Google sends back token and profile
+    (req, token, refreshToken, profile, done) => {
+      // don't run processAuth until all our input data is complete
       process.nextTick(() => {
-        User.findOne({ 'google.id': profile.id }, async (err, user) => {
-          if (err) {
-            return done(err);
-          }
-          // user not found in database; sign them up
-          if (!user) {
-            const newUser = new User();
-            newUser.google.id = profile.id;
-            newUser.google.token = accessToken;
-            newUser.google.name = profile.displayName;
-            try {
-              await newUser.save();
-              return done(null, newUser);
-            } catch (e) {
-              console.error(e);
-            }
-          }
-
-          // user found log them in
-          return done(null, user);
-        });
+        processAuth(req, token, profile, done, 'google');
       });
     }
   ));
