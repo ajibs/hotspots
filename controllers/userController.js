@@ -15,12 +15,6 @@ exports.showSignup = (req, res) => {
 };
 
 
-exports.getUsers = async (req, res) => {
-  const users = await User.find();
-  res.json({ users });
-};
-
-
 exports.validateSignup = (req, res, next) => {
   req.checkBody('username', 'You must supply a name!').notEmpty();
   req.sanitizeBody('username');
@@ -46,13 +40,31 @@ exports.showProfile = (req, res) => {
 };
 
 
-exports.updateProfile = async (req, res) => {
+exports.showConnectLocal = (req, res) => {
+  res.render('connect-local');
+};
+
+
+exports.updateUsername = async (req, res) => {
   await User.findOneAndUpdate(
     { _id: req.user._id },
-    { $set: { username: req.body.username } },
+    { $set: { 'local.username': req.body.username } },
     { new: true, runValidators: true }
   );
 
   req.flash('success', 'profile update successful');
+  res.redirect('back');
+};
+
+
+exports.unlinkAccount = async (req, res) => {
+  const { accountType } = req.params;
+  await User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $unset: { [accountType]: 1 } },
+    { new: true }
+  );
+
+  req.flash('success', `${accountType} account unlinked successfully`);
   res.redirect('back');
 };

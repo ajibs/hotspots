@@ -32,3 +32,36 @@ exports.isLoggedIn = (req, res, next) => {
   res.redirect('/login');
 };
 
+
+exports.facebookAuth = passport.authenticate('facebook');
+exports.facebookCallback = passport.authenticate('facebook', {
+  successRedirect: '/profile',
+  failureRedirect: '/login'
+});
+
+
+exports.twitterAuth = passport.authenticate('twitter');
+exports.twitterCallback = passport.authenticate('twitter', {
+  successRedirect: '/profile',
+  failureRedirect: '/login'
+});
+
+
+exports.googleAuth = passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] });
+exports.googleCallback = passport.authenticate('google', {
+  successRedirect: '/profile',
+  failureRedirect: '/login'
+});
+
+
+exports.connectLocalAuth = passport.authenticate('local-signup', {
+  successRedirect: '/profile',
+  failureRedirect: '/connect/local'
+});
+
+
+exports.connectFacebook = passport.authorize('facebook');
+
+exports.connectTwitter = passport.authorize('twitter');
+
+exports.connectGoogle = passport.authorize('google', { scope: ['https://www.googleapis.com/auth/plus.login'] });

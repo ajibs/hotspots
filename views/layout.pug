@@ -8,12 +8,22 @@ html(lang="en")
   body
     a(href="/")
       button Home
+    a(href="/profile")
+      button Profile
     a(href="/signup")
       button Signup
     a(href="/login")
       button Login
     a(href="/logout")
       button Logout
+    a(href="/auth/facebook")
+      button Facebook
+    a(href="/auth/twitter")
+      button Twitter
+    a(href="/auth/google")
+      button Google
+
+
 
 
     block messages
@@ -28,4 +38,6 @@ html(lang="en")
 
     block scripts
       script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6k9IMLlnl2bzNLubzvzB-Y6f17lQyexU&libraries=places")
+      if (user)
+        script const signedInUser = true;
       script(src="/dist/App.bundle.js")

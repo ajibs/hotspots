@@ -2,16 +2,32 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    unique: true,
-    lowercase: true,
-    trim: true,
-    required: 'Please supply a username'
+  local: {
+    username: {
+      type: String,
+      lowercase: true,
+      trim: true
+      // required: 'Please supply a username'
+    },
+    password: {
+      type: String
+      // required: 'Please supply a password'
+    }
   },
-  password: {
-    type: String,
-    required: 'Please supply a password'
+  facebook: {
+    id: String,
+    token: String,
+    name: String
+  },
+  twitter: {
+    id: String,
+    token: String,
+    name: String
+  },
+  google: {
+    id: String,
+    token: String,
+    name: String
   }
 });
 
@@ -22,10 +38,10 @@ const userSchema = new mongoose.Schema({
 // generate a hash
 userSchema.methods.generateHash = function generateHash(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(12), null);
-}
+};
 
 userSchema.methods.validPassword = function validPassword(password) {
-  return bcrypt.compareSync(password, this.password);
+  return bcrypt.compareSync(password, this.local.password);
 };
 
 module.exports = mongoose.model('User', userSchema);
