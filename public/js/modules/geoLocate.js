@@ -1,7 +1,6 @@
 import searchPlaces from './searchPlaces';
 
 function geoLocate() {
-
   if (navigator.geolocation) {
     const geoSuccess = (position) => {
       const { latitude } = position.coords;
@@ -24,7 +23,6 @@ function geoLocate() {
   } else {
     alert('Error! Your browser does not support geolocation');
   }
-
 }
 
 export default geoLocate;

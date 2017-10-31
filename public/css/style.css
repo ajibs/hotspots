@@ -1,9 +1,100 @@
-/* setting comments */
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
 body {
-  background-color: yellow;
-  font-size: 25px;
+  background-color: #323232;
+  color: #fff;
+  font-size: 18px;
+}
+
+header {
+  width: 100%;
+  min-height: auto;
+  padding: 20px 15px;
+  text-align: center;
 }
 
 #chillOut {
   display: none;
+}
+
+.going {
+  background: #b20000;
+  padding: 50px;
+  border-radius: 10px;
+}
+
+.super-title {
+  font-size: 64px;
+  font-weight: 400;
+}
+
+.hotspots-search-wrapper {
+  margin-top: 20px;
+}
+
+#data {
+  margin-top: 20px;
+}
+
+#search-input {
+  color: #333;
+  border: 3px solid #2e6da4;
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 80%;
+}
+
+#search-input:hover {
+  border-color: #5cb85c;
+}
+
+@media(min-width: 800px){
+  #search-input {
+    width: 50%;
+  }
+}
+
+section {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.form-container {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 40px;
+  color: #333;
+}
+
+
+.fa {
+  margin-right: 10px;
+}
+
+.icon-wrapper {
+  color: #fff;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+.btn-bg-facebook {
+  background-color: #507cc0;
+}
+
+.btn-bg-twitter {
+  background-color: #1da1f2;
+}
+
+.btn-bg-google {
+  background-color: #df4930;
+}
+
+.login-alt {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 16px;
 }
