@@ -88,7 +88,7 @@ module.exports = (passport) => {
         }
 
         // login successful
-        return done(null, user);
+        return done(null, user, req.flash('success', 'You are now logged in'));
       });
     });
   }));

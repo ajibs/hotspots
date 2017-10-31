@@ -14,7 +14,6 @@ function closeModal() {
 
 
 function searchPlaces(latInput, lngInput) {
-  console.log(latInput, lngInput);
   $('#data').innerHTML = '';
   openModal();
 
