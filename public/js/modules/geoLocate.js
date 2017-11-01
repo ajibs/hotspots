@@ -9,6 +9,7 @@ function geoLocate() {
     };
 
     const geoError = (error) => {
+      alert('Error Occured');
       console.log(`Error occured. Error code: ${error.code}`);
     };
 

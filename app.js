@@ -1,6 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
-const routes = require('./routes/routes');
+const routes = require('./routes/index');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const cookieParser = require('cookie-parser');

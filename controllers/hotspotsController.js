@@ -7,6 +7,7 @@ exports.showHome = (req, res) => {
 };
 
 
+// add user as going or remove from going
 exports.going = async (req, res) => {
   const { placeID } = req.params;
   const place = await Place.find({ placeID });
@@ -14,18 +15,23 @@ exports.going = async (req, res) => {
 
   if (!place.length) {
     // place not found
-    // set document expiration date
+    // set document expiration date to 9am the next day
     const expireAt = Place.expirationDate();
     const newSpot = await (new Place({ placeID, usernamesGoing: username, expireAt })).save();
-    res.json({ message: 'not found', newSpot });
+    res.json({ message: 'hotspot not in DB', newSpot });
     return;
   }
 
   // place found
-  // check if user has previously indicated going tonight
-  const [incValue, operator] = place[0].usernamesGoing.includes(username) ? ['-1', '$pull'] : ['1', '$addToSet'];
 
-  // find placeID and update
+  const remove = ['-1', '$pull'];
+  const addGoing = ['1', '$addToSet'];
+  const usersTonight = place[0].usernamesGoing;
+
+  // check if user has previously indicated going tonight
+  const [incValue, operator] = usersTonight.includes(username) ? remove : addGoing;
+
+  // use placeID to update place document
   const updated = await Place.findOneAndUpdate(
     { placeID },
     {
@@ -35,5 +41,5 @@ exports.going = async (req, res) => {
     { new: true }
   );
 
-  res.json({ message: 'found', updated });
+  res.json({ message: 'hotspot already in DB', updated });
 };

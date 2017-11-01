@@ -45,22 +45,23 @@ module.exports = (passport) => {
           return done(null, false, req.flash('signupMessage', 'That username already exists'));
         }
 
-        let localUser;
-        if (req.user) {
-          // user is logged in; use existing account details
-          localUser = req.user;
-        } else {
-          // create entirely new user
-          localUser = new User();
-        }
+        /**
+         * check if the user is already logged in
+         * user is logged in; use exisiting account details
+         * else create entirely new user
+         */
+        const localUser = req.user ? req.user : new User();
         localUser.local.username = username;
         localUser.local.password = localUser.generateHash(password);
         try {
           await localUser.save();
-          return done(null, localUser);
+          return done(null, localUser, req.flash('message', 'Local account signup successful'));
         } catch (e) {
           console.error(e);
         }
+
+        // function gets here means local signup failed
+        return done(null, false, req.flash('message', 'local account signup failed'));
       });
     });
   }));
@@ -107,27 +108,26 @@ module.exports = (passport) => {
 
       if (user) {
         // user account exists;
-        return done(null, user);
+        return done(null, user, req.flash('message', 'Social media account exists. Awesome!'));
       }
 
-      let socialUser;
-      // check if the user is already logged in
-      if (req.user) {
-        // user is logged in; use exisitng account details
-        socialUser = req.user;
-      } else {
-        // create entirely new user
-        socialUser = new User();
-      }
+      /**
+       * check if the user is already logged in
+       * user is logged in; use exisiting account details
+       * else create entirely new user
+       */
+      const socialUser = req.user ? req.user : new User();
       socialUser[socialMedia].id = profile.id;
       socialUser[socialMedia].token = token;
       socialUser[socialMedia].name = profile.displayName;
       try {
         await socialUser.save();
-        return done(null, socialUser);
+        return done(null, socialUser, req.flash('message', 'Social media account connected successfully!'));
       } catch (e) {
         console.error(e);
       }
+      // function gets here; social media login/signup failed
+      return done(null, false, req.flash('message', 'Unsuccessful'));
     });
   }
 

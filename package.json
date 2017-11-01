@@ -8,7 +8,7 @@
     "assets": "webpack -w --display-max-modules 0"
   },
   "repository": "https://github.com/ajibs/hotspots.git",
-  "author": "bolu ajibs <bolu.ajibawo@gmail.com>",
+  "author": "Bolu Ajibawo <bolu.ajibawo@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.16.2",
@@ -23,10 +23,8 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "express-validator": "^4.2.1",
-    "flash": "^1.1.0",
     "helmet": "^3.8.2",
     "mongoose": "^4.12.1",
-    "optimize-css-assets-webpack-plugin": "^3.2.0",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth": "^1.0.0",
@@ -45,6 +43,7 @@
     "eslint-config-airbnb-base": "^12.0.2",
     "eslint-plugin-import": "^2.7.0",
     "extract-text-webpack-plugin": "^3.0.1",
+    "optimize-css-assets-webpack-plugin": "^3.2.0",
     "webpack": "^3.7.1"
   }
 }
