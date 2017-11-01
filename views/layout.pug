@@ -4,8 +4,8 @@ html(lang="en")
     meta(charset="utf-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     title #{title}
-    if (title !== 'Home')
-      link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700")
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
     link(rel="stylesheet" href="/dist/style.bundle.css")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js")
@@ -40,10 +40,18 @@ html(lang="en")
         - const categories = Object.keys(locals.flashes)
         each category in categories
           each message in flashes[category]
-            p(class="alert alert-success")!= message
+            div(class="col-md-6 col-md-offset-3")
+              p(class="alert alert-info text-center")!= message
 
 
     block content
+
+    footer(class="text-center")
+      p Created with <span class="glyphicon glyphicon-heart"></span> by Bolu Ajibawo
+      p Source code on
+        a(href="https://github.com/ajibs/hotspots" target="_blank")  Github
+          i(class="fa fa-github fa-lg" aria-hidden="true")
+
 
     block scripts
       if (title === 'Home')
