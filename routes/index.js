@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get('/', hotspotsController.showHome);
 
-
+// user profile
 router.get(
   '/profile',
   authController.isLoggedIn,
@@ -21,6 +21,7 @@ router.post(
   catchErrors(userController.updateUsername)
 );
 
+// update users going tonight
 router.post(
   '/places/:placeID',
   authController.isLoggedIn,
@@ -58,12 +59,12 @@ router.get('/auth/google/callback', authController.googleCallback);
 // AUTHORIZE (Already logged in / connecting other social account)
 // local Authorize
 router.get(
-  '/connect-local',
+  '/connect/local',
   authController.isLoggedIn,
   userController.showConnectLocal
 );
 router.post(
-  '/connect-local',
+  '/connect/local',
   authController.isLoggedIn,
   authController.connectLocalAuth
 );
@@ -90,7 +91,7 @@ router.get(
 );
 
 
-// Anlink Accounts
+// Unlink Accounts
 router.get(
   '/unlink/:accountType',
   authController.isLoggedIn,

@@ -11,9 +11,6 @@ body {
 }
 
 header {
-  width: 100%;
-  min-height: auto;
-  padding: 20px 15px;
   text-align: center;
 }
 
@@ -26,6 +23,7 @@ header {
 
 footer {
   margin-top: 40px;
+  text-align: center;
 }
 
 #chillOut {
@@ -60,6 +58,12 @@ footer {
   width: 80%;
 }
 
+@media(min-width: 800px){
+  #search-input {
+    width: 50%;
+  }
+}
+
 #search-input:hover {
   border-color: #337ab7;
 }
@@ -67,12 +71,6 @@ footer {
 .data-button {
   margin-left: 20px;
   color: #333;
-}
-
-@media(min-width: 800px){
-  #search-input {
-    width: 50%;
-  }
 }
 
 section {
@@ -87,7 +85,6 @@ section {
   padding: 40px;
   color: #333;
 }
-
 
 .fa {
   margin-right: 10px;

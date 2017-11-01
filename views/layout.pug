@@ -47,7 +47,8 @@ html(lang="en")
 
     block content
 
-    footer(class="text-center")
+
+    footer
       p Created with <span class="glyphicon glyphicon-heart"></span> by Bolu Ajibawo
       p Source code on
         a(href="https://github.com/ajibs/hotspots" target="_blank")  Github
@@ -56,7 +57,7 @@ html(lang="en")
 
     block scripts
       if (title === 'Home')
-        script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6k9IMLlnl2bzNLubzvzB-Y6f17lQyexU&libraries=places")
+        script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAPS_KEY}&libraries=places`)
       if (user)
         script const signedInUser = true;
       script(src="/dist/App.bundle.js")

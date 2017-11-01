@@ -7,11 +7,9 @@ const userSchema = new mongoose.Schema({
       type: String,
       lowercase: true,
       trim: true
-      // required: 'Please supply a username'
     },
     password: {
       type: String
-      // required: 'Please supply a password'
     }
   },
   facebook: {
@@ -31,6 +29,7 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+
 /**
  * methods
  */
@@ -43,5 +42,6 @@ userSchema.methods.generateHash = function generateHash(password) {
 userSchema.methods.validPassword = function validPassword(password) {
   return bcrypt.compareSync(password, this.local.password);
 };
+
 
 module.exports = mongoose.model('User', userSchema);

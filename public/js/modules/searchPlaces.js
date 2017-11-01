@@ -12,13 +12,12 @@ function closeModal() {
   $('#chillOut').style.display = 'none';
 }
 
-function generateHotspotsLayout(hotspot, token) {
+function generateHotspotsLayout(hotspot) {
   return `
   <div class="col-md-8 col-md-offset-2 top-wrapper">
     <form action="/places/${hotspot.place_id}" class="going">
-      <input type="hidden" name="_csrf" value=${token}>
       <h3><strong>${hotspot.name}</strong></h3>
-      <p>Rating: ${hotspot.rating || 'not available'} </p>
+      <p>Rating: ${hotspot.rating || 'Not Available'} </p>
       <button type="submit" name="goingButton" class="data-button">0 Going</button>
       </form>
   </div>
@@ -38,16 +37,21 @@ function searchPlaces(latInput, lngInput) {
   axios
     .get(proxyurl + url)
     .then((res) => {
-      const hotspots = res.data;
-      const csrfGeneralToken = $('#csrfGeneralToken').value;
+      const hotspots = res.data.results;
       let html = '';
-      // hotspots.results contains all the data I need
-      hotspots.results.forEach((place) => {
-        // render data on the page
-        html += generateHotspotsLayout(place, csrfGeneralToken);
+
+      // hotspots contains all the data I need
+      hotspots.forEach((place) => {
+        // generate html and save to variable
+        html += generateHotspotsLayout(place);
       });
+
+      // paint html to page
       $('#data').innerHTML = html;
       closeModal();
+
+      // pass token to ajaxGoing because of csrf package
+      const csrfGeneralToken = $('#csrfGeneralToken').value;
 
       // when user clicks "going button" update database and UI
       $$('form.going').on('submit', function(e) {

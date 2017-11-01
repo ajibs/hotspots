@@ -1,6 +1,11 @@
 extends layout
 
 block content
-  h2= status
-  p= message
-  pre.error!= stackHighlighted
+  div(class="container")
+    div(class="row")
+      div(class="col-md-12")
+        div(class="form-container")
+          h1= title
+          h2= status
+          p= message
+          pre.error!= stackHighlighted

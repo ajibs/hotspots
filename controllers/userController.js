@@ -41,7 +41,9 @@ exports.showProfile = (req, res) => {
 
 
 exports.showConnectLocal = (req, res) => {
-  res.render('connect-local');
+  res.render('connect-local', {
+    title: 'Connect Local'
+  });
 };
 
 
@@ -52,7 +54,7 @@ exports.updateUsername = async (req, res) => {
     { new: true, runValidators: true }
   );
 
-  req.flash('success', 'profile update successful');
+  req.flash('success', 'Profile update successful');
   res.redirect('back');
 };
 

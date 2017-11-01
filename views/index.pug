@@ -9,11 +9,10 @@ block content
         div(class="col-md-12")
           h1(class="super-title") Hotspots
           div
-            img(src="/images/icons/map.png")
-            img(src="/images/icons/car.png")
-            img(src="/images/icons/wine.png")
+            each icon in ['map', 'car', 'wine']
+              img(src=`/images/icons/${icon}.png`)
             a(href="https://github.com/ajibs/hotspots" target="_blank")
               img(src="/images/icons/github.png")
           h4 See which clubs are bubblin' tonight and RSVP ahead of time!<br>Remember: have fun and don't go home sober
-          img(src="/images/icons/powered_by_google_on_non_white_hdpi.png")
           +searchHotspots()
+          img(src="/images/photos/powered_by_google.png" class="top-wrapper")
