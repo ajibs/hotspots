@@ -12,6 +12,19 @@ function closeModal() {
   $('#chillOut').style.display = 'none';
 }
 
+function generateHotspotsLayout(hotspot, token) {
+  return `
+  <div class="col-md-8 col-md-offset-2 top-wrapper">
+    <form action="/places/${hotspot.place_id}" class="going">
+      <input type="hidden" name="_csrf" value=${token}>
+      <h3><strong>${hotspot.name}</strong></h3>
+      <p>Rating: ${hotspot.rating || 'not available'} </p>
+      <button type="submit" name="goingButton" class="data-button">0 Going</button>
+      </form>
+  </div>
+`;
+}
+
 
 function searchPlaces(latInput, lngInput) {
   $('#data').innerHTML = '';
@@ -31,13 +44,7 @@ function searchPlaces(latInput, lngInput) {
       // hotspots.results contains all the data I need
       hotspots.results.forEach((place) => {
         // render data on the page
-        html +=
-          `<form action="/places/${place.place_id}" class="going">
-            <input type="hidden" name="_csrf" value=${csrfGeneralToken}>
-            ${place.name}
-            <button type="submit" name="goingButton">0 Going</button>
-          </form><br><br>
-          `;
+        html += generateHotspotsLayout(place, csrfGeneralToken);
       });
       $('#data').innerHTML = html;
       closeModal();
