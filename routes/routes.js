@@ -58,12 +58,12 @@ router.get('/auth/google/callback', authController.googleCallback);
 // AUTHORIZE (Already logged in / connecting other social account)
 // local Authorize
 router.get(
-  '/connect/local',
+  '/connect-local',
   authController.isLoggedIn,
   userController.showConnectLocal
 );
 router.post(
-  '/connect/local',
+  '/connect-local',
   authController.isLoggedIn,
   authController.connectLocalAuth
 );

@@ -1,36 +1,45 @@
 extends layout
 
 block content
-  pre= h.dump(user)
-  h2= title
-  // local profile
-  if user.local.username
-    form(action="/profile" method="POST")
-      input(type="hidden" name="_csrf" value= csrfToken)
-      label(for="username") Username
-      input(type="text" name="username" value=user.local.username)
-      button(type="submit" value="submit") Submit
-    a(href="/unlink/local" class="btn btn-danger btn-lg") Unlink Local
-  else
-    a(href="/connect/local" class="btn btn-success btn-lg") Connect Local
-  // facebook profile
-  if user.facebook.id
-    p= user.facebook.id
-    p= user.facebook.name
-    a(href="/unlink/facebook" class="btn btn-danger btn-lg") Unlink Facebook
-  else
-    a(href="/connect/facebook" class="btn btn-success btn-lg") Connect Facebook
-  // twitter profile
-  if user.twitter.id
-    p= user.twitter.id
-    p= user.twitter.name
-    a(href="/unlink/twitter" class="btn btn-danger btn-lg") Unlink Twitter
-  else
-    a(href="/connect/twitter" class="btn btn-success btn-lg") Connect Twitter
-  // google profile
-  if user.google.id
-    p= user.google.id
-    p= user.google.name
-    a(href="/unlink/google" class="btn btn-danger btn-lg") Unlink Google
-  else
-    a(href="/connect/google" class="btn btn-success btn-lg") Connect Google
+  section(class="container-fluid")
+    div(class="form-container col-md-6 col-md-offset-3")
+      h2= title
+      // local profile
+      div(class="account-type")
+        if user.local.username
+          h3 Local
+          form(action="/profile" method="POST")
+            input(type="hidden" name="_csrf" value= csrfToken)
+            div(class="form-group")
+              input(type="text" name="username" class="form-control" value=user.local.username)
+              button(type="submit" class="btn btn-danger btn-md" value="submit") Change username
+          a(href="/unlink/local" class="btn btn-danger btn-lg") Unlink Local
+        else
+          a(href="/connect-local" class="btn btn-success btn-lg") Connect Local
+      // facebook profile
+      div(class="account-type")
+        if user.facebook.id
+          h3 Facebook
+          p= user.facebook.id
+          p= user.facebook.name
+          a(href="/unlink/facebook" class="btn btn-danger btn-lg") Unlink Facebook
+        else
+          a(href="/connect/facebook" class="btn btn-success btn-lg") Connect Facebook
+      // twitter profile
+      div(class="account-type")
+        if user.twitter.id
+          h3 Twitter
+          p= user.twitter.id
+          p= user.twitter.name
+          a(href="/unlink/twitter" class="btn btn-danger btn-lg") Unlink Twitter
+        else
+          a(href="/connect/twitter" class="btn btn-success btn-lg") Connect Twitter
+      // google profile
+      div(class="account-type")
+        if user.google.id
+          h3 Google
+          p= user.google.id
+          p= user.google.name
+          a(href="/unlink/google" class="btn btn-danger btn-lg") Unlink Google
+        else
+          a(href="/connect/google" class="btn btn-success btn-lg") Connect Google

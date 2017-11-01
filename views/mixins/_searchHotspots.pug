@@ -1,6 +1,11 @@
 mixin searchHotspots()
-  form
-    input(type="hidden" id="csrfGeneralToken" name="_csrf" value= csrfToken)
-    label Enter a City
-    input(type="text" name="search" placeholder="e.g. Amsterdam" id="search-place")
-  div(id="data")
+  div(class="top-wrapper")
+    button(id="your-location" class="btn btn-primary btn-lg") Find near Me
+    h3 OR
+    form
+      input(type="hidden" id="csrfGeneralToken" name="_csrf" value= csrfToken)
+      input(type="text" name="search" placeholder="enter a city" id="search-input")
+    div(id="data" class="top-wrapper")
+    div(id="chillOut")
+      p(class="text-uppercase") Chill
+      img(src="/images/icons/adorable-kitten.gif" class="img-responsive center-block")
