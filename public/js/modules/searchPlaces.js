@@ -32,7 +32,7 @@ function searchPlaces(latInput, lngInput) {
   // remove CORS proxy on uploading to host
   // const proxyurl = 'https://ajibs-cors-anywhere.herokuapp.com/';
 
-  // pass lat, lng and places key to url
+  // pass lat, lng and Google Places Key to url
   const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latInput},${lngInput}&radius=10000&type=night_club&key=AIzaSyDPxdi1VQQ3vF8voAvgQ93jugBmHEAc5fY`;
   axios
     .get(url)
