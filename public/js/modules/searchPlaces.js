@@ -29,10 +29,16 @@ function searchPlaces(latInput, lngInput) {
   $('#data').innerHTML = '';
   openModal();
 
+  /**
+   * CORS proxy is necessary even after deploying to heroku
+   * browser complains without it and won't retrieve data
+   */
+  const corsProxy = 'https://ajibs-cors-anywhere.herokuapp.com/';
+
   // pass lat, lng and Google Places Key to url
   const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latInput},${lngInput}&radius=10000&type=night_club&key=AIzaSyDPxdi1VQQ3vF8voAvgQ93jugBmHEAc5fY`;
   axios
-    .get(url)
+    .get(corsProxy + url)
     .then((res) => {
       const hotspots = res.data.results;
       let html = '';
