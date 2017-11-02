@@ -1,0 +1,18 @@
+extends layout
+
+include mixins/_searchHotspots
+
+block content
+  header
+    div(class="container")
+      div(class="row")
+        div(class="col-md-12")
+          h1(class="super-title") Hotspots
+          div
+            each icon in ['map', 'car', 'wine']
+              img(src=`/images/icons/${icon}.png`)
+            a(href="https://github.com/ajibs/hotspots" target="_blank")
+              img(src="/images/icons/github.png")
+          h4 See which clubs are bubblin' tonight and RSVP ahead of time!<br>Remember: have fun and don't go home sober
+          +searchHotspots()
+          img(src="/images/photos/powered_by_google.png" class="top-wrapper")
