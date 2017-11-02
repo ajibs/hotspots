@@ -48,13 +48,23 @@ exports.showConnectLocal = (req, res) => {
 
 
 exports.updateUsername = async (req, res) => {
-  await User.findOneAndUpdate(
-    { _id: req.user._id },
-    { $set: { 'local.username': req.body.username } },
-    { new: true, runValidators: true }
-  );
+  const { username } = req.body;
+  const duplicateUser = await User.find({ 'local.username': username });
 
-  req.flash('success', 'Profile update successful');
+  // username not in database
+  if (!duplicateUser.length) {
+    await User.findOneAndUpdate(
+      { _id: req.user._id },
+      { $set: { 'local.username': username } },
+      { new: true, runValidators: true }
+    );
+
+    req.flash('success', 'Profile update successful');
+    res.redirect('back');
+    return;
+  }
+
+  req.flash('error', 'Error! That username is not available, choose another username');
   res.redirect('back');
 };
 
