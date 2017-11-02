@@ -17,8 +17,8 @@ Hotspots is a [FreeCodeCamp](https://www.freecodecamp.org/) Project.
 
 
 ## Getting Started
-Hotspots is hosted on Amazon and can be accessed here:
-- [Production](https://#)
+Hotspots is hosted on Heroku and can be accessed here:
+- [Production](https://hotspots-tonight.herokuapp.com)
 
 
 ## Prerequisites
@@ -40,9 +40,11 @@ Hotspots is hosted on Amazon and can be accessed here:
 - [Node.js](https://nodejs.org/) - JS Runtime Environment
 - [Yarn](https://yarnpkg.com) - Package Manager
 - [Express](https://expressjs.com/en/starter/installing.html) - Web Framework
-- [EJS](http://ejs.co/) - Templating Engine
+- [Pug](https://pugjs.org/api/getting-started.html) - Templating Engine
+- [Webpack](https://webpack.js.org/) - Build Tool
+- [Babel](https://babeljs.io/) - Transpiler
 - [mLab](https://mlab.com/) - Database
-- [Amazon](www.amazon,com) - Hosting and Continuous Deployment
+- [Heroku](www.Heroku,com) - Hosting and Continuous Deployment
 - [VS Code](https://code.visualstudio.com/) - Code Editor
 - [Chrome](https://www.google.com/chrome/browser/desktop/index.html) - Browser
 
@@ -63,6 +65,7 @@ Contributions are welcome
 
 
 ## Acknowledgments
+* [Jordan Sobovitch](https://github.com/JordanSobovitch/nightlife-app)
 * [FreeCodeCamp](https://www.freecodecamp.org/)
 * [Chingu Cohorts](https://chingu-cohorts.github.io/chingu-directory/)
 * Red Pandas
