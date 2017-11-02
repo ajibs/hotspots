@@ -137,7 +137,7 @@ module.exports = (passport) => {
     {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/facebook/callback',
+      callbackURL: process.env.FACEBOOK_CALLBACK,
       // allows us to pass in the req from out route (lets us check if a user is logged in or not)
       passReqToCallback: true
     },
@@ -157,7 +157,7 @@ module.exports = (passport) => {
     {
       consumerKey: process.env.TWITTER_CLIENT_ID,
       consumerSecret: process.env.TWITTER_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/twitter/callback',
+      callbackURL: process.env.TWITTER_CALLBACK,
       passReqToCallback: true
     },
     // Twitter sends back token and profile
@@ -175,7 +175,7 @@ module.exports = (passport) => {
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/google/callback',
+      callbackURL: process.env.GOOGLE_CALLBACK,
       passReqToCallback: true
     },
     // Google sends back token and profile
