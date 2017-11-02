@@ -15,7 +15,6 @@ function ajaxGoing(e, target, csrfToken) {
       }
 
       const result = res.data;
-      console.log(result);
       const value = result.updated ? result.updated.numberTonight : result.newSpot.numberTonight;
 
       // select "going button" with name tag
