@@ -1,6 +1,9 @@
 {
   "name": "hotspots",
   "version": "0.0.1",
+  "engines": {
+    "node": ">= 7.6.0"
+  },
   "scripts": {
     "start": "node ./start.js",
     "watch": "nodemon ./start.js --ignore public",
