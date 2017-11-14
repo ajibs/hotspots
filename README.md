@@ -6,8 +6,8 @@ Hotspots is a [FreeCodeCamp](https://www.freecodecamp.org/) Project.
 
 
 ## Feature List
-* View all the night clubs in your location.
-* View all the night clubs in a city.
+* View night clubs in your location.
+* View night clubs in any city in the world.
 * Authenticated user can indicate as going to a night club.
 * Authenticated user can remove from going to a night club.
 * Google typeAhead.
@@ -26,8 +26,8 @@ Hotspots is hosted on Heroku and can be accessed here:
 
  - Web Browser (Chrome, or Mozilla, or Safari, or Opera, or Microsoft Edge )
 
- #### For Developerss:
- - [Git](https://git-for-windows.github.io/)
+ #### For Developers:
+ - [Git](https://git-scm.com/)
  - [Node.js](https://nodejs.org/en/download/)
  - [MongoDb](https://www.mongodb.com/download-center#community)
  - [Yarn](https://yarnpkg.com/en/docs/install)
@@ -44,7 +44,7 @@ Hotspots is hosted on Heroku and can be accessed here:
 - [Webpack](https://webpack.js.org/) - Build Tool
 - [Babel](https://babeljs.io/) - Transpiler
 - [mLab](https://mlab.com/) - Database
-- [Heroku](www.Heroku,com) - Hosting and Continuous Deployment
+- [Heroku](https://heroku.com) - Hosting and Continuous Deployment
 - [VS Code](https://code.visualstudio.com/) - Code Editor
 - [Chrome](https://www.google.com/chrome/browser/desktop/index.html) - Browser
 
