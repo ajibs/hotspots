@@ -1,6 +1,6 @@
 # Hotspots
 
-Discover the best night clubs around you and RSVP ahead of time.
+Discover the best night clubs around you or in any location in the world and RSVP ahead of time.
 
 Hotspots is a [FreeCodeCamp](https://www.freecodecamp.org/) Project.
 
@@ -45,7 +45,7 @@ cd hotspots
 ```
 
 #### Install Node.js and Yarn
-If you don't have Node.js installed, please go ahead and grab it [here](https://nodejs.org/). This project uses ES6+ features and requires Node version `<=8.9.1`
+If you don't have Node.js installed, please go ahead and grab it [here](https://nodejs.org/). This project uses ES6+ features and requires Node version `>= 7.6.0` and `<=8.9.1`
 
 Yarn is a package manager for Node.js and can be installed from [here](https://yarnpkg.com/en/docs/install).
 
